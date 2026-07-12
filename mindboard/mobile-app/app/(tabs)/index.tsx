@@ -8,6 +8,7 @@ import {
   View,
 } from "react-native";
 import { Audio } from "expo-av";
+import Feather from "@expo/vector-icons/Feather";
 import { uploadEntry } from "../../lib/api";
 import { theme } from "../../lib/theme";
 import type { Entry } from "../../lib/types";
@@ -104,7 +105,7 @@ export default function TalkScreen() {
           <Text style={styles.prompt}>{prompt}</Text>
           <View style={styles.recordRing}>
             <Pressable style={styles.recordButton} onPress={startRecording}>
-              <Text style={styles.recordButtonText}>●</Text>
+              <Feather name="mic" size={30} color="#FFFFFF" />
             </Pressable>
           </View>
           <Text style={styles.hint}>Tap to start talking</Text>
@@ -116,9 +117,9 @@ export default function TalkScreen() {
           <Text style={styles.timer}>
             {mm}:{ss}
           </Text>
-          <View style={styles.recordRing}>
+          <View style={styles.recordRingActive}>
             <Pressable style={styles.stopButton} onPress={stopAndUpload}>
-              <Text style={styles.stopButtonText}>■</Text>
+              <View style={styles.stopIcon} />
             </Pressable>
           </View>
           <Text style={styles.hint}>Tap to finish</Text>
@@ -149,6 +150,7 @@ export default function TalkScreen() {
             </View>
           )}
           <Pressable style={styles.secondaryButton} onPress={reset}>
+            <Feather name="rotate-ccw" size={16} color="#FFFFFF" />
             <Text style={styles.secondaryButtonText}>New check-in</Text>
           </Pressable>
         </View>
@@ -156,8 +158,10 @@ export default function TalkScreen() {
 
       {phase === "error" && (
         <View style={styles.panel}>
+          <Feather name="alert-circle" size={28} color={theme.danger} />
           <Text style={styles.errorText}>{errorMessage}</Text>
           <Pressable style={styles.secondaryButton} onPress={reset}>
+            <Feather name="rotate-ccw" size={16} color="#FFFFFF" />
             <Text style={styles.secondaryButtonText}>Try again</Text>
           </Pressable>
         </View>
@@ -197,6 +201,14 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
+  recordRingActive: {
+    width: 108,
+    height: 108,
+    borderRadius: 54,
+    backgroundColor: theme.dangerSoft,
+    alignItems: "center",
+    justifyContent: "center",
+  },
   recordButton: {
     width: 80,
     height: 80,
@@ -210,11 +222,10 @@ const styles = StyleSheet.create({
     shadowRadius: 16,
     elevation: 6,
   },
-  recordButtonText: { color: "#FFFFFF", fontSize: 28 },
   stopButton: {
     width: 80,
     height: 80,
-    borderRadius: 26,
+    borderRadius: 28,
     backgroundColor: theme.danger,
     alignItems: "center",
     justifyContent: "center",
@@ -224,7 +235,12 @@ const styles = StyleSheet.create({
     shadowRadius: 16,
     elevation: 6,
   },
-  stopButtonText: { color: "#FFFFFF", fontSize: 24 },
+  stopIcon: {
+    width: 24,
+    height: 24,
+    borderRadius: 6,
+    backgroundColor: "#FFFFFF",
+  },
   hint: { color: theme.textFaint, fontSize: 13, fontWeight: "600" },
   timer: {
     color: theme.text,
@@ -258,9 +274,12 @@ const styles = StyleSheet.create({
   themeChipText: { color: theme.accentStrong, fontSize: 12, fontWeight: "700" },
   secondaryButton: {
     marginTop: 8,
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 8,
     backgroundColor: theme.accent,
     borderRadius: 999,
-    paddingHorizontal: 26,
+    paddingHorizontal: 24,
     paddingVertical: 13,
   },
   secondaryButtonText: { color: "#FFFFFF", fontWeight: "700", fontSize: 14 },

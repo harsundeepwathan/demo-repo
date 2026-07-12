@@ -1,4 +1,5 @@
 import { StyleSheet, Text, View } from "react-native";
+import Feather from "@expo/vector-icons/Feather";
 import { theme } from "../lib/theme";
 
 export function CrisisBanner() {
@@ -6,7 +7,10 @@ export function CrisisBanner() {
     <View style={styles.container}>
       <View style={styles.accentBar} />
       <View style={styles.body}>
-        <Text style={styles.title}>If you're in crisis right now</Text>
+        <View style={styles.titleRow}>
+          <Feather name="alert-triangle" size={16} color={theme.danger} />
+          <Text style={styles.title}>If you're in crisis right now</Text>
+        </View>
         <Text style={styles.text}>
           This app is a private journal, not emergency or clinical care. In the US, call or
           text 988 (Suicide & Crisis Lifeline) any time. Outside the US, contact your local
@@ -32,6 +36,11 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 16,
     gap: 6,
+  },
+  titleRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 8,
   },
   title: {
     color: theme.danger,

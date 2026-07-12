@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Alert, Pressable, ScrollView, StyleSheet, Text, TextInput, View } from "react-native";
+import Feather from "@expo/vector-icons/Feather";
 import { checkServerHealth, deleteAllEntries } from "../../lib/api";
 import { getServerUrl, setServerUrl } from "../../lib/storage";
 import { theme } from "../../lib/theme";
@@ -52,7 +53,10 @@ export default function SettingsScreen() {
       <Text style={styles.heading}>Settings</Text>
 
       <View style={styles.panel}>
-        <Text style={styles.panelTitle}>Backend server</Text>
+        <View style={styles.panelTitleRow}>
+          <Feather name="server" size={13} color={theme.accent} />
+          <Text style={styles.panelTitle}>Backend server</Text>
+        </View>
         <Text style={styles.helpText}>
           Mindboard needs your self-hosted server's address, e.g. http://192.168.1.20:4000.
           Both your phone and the server need to be on the same network during development.
@@ -68,10 +72,16 @@ export default function SettingsScreen() {
           keyboardType="url"
         />
         <Pressable style={styles.primaryButton} onPress={save}>
+          <Feather name="link" size={16} color="#FFFFFF" />
           <Text style={styles.primaryButtonText}>Save & test connection</Text>
         </Pressable>
         {connection === "checking" && <Text style={styles.helpText}>Checking…</Text>}
-        {connection === "ok" && <Text style={styles.okText}>Connected.</Text>}
+        {connection === "ok" && (
+          <View style={styles.okRow}>
+            <Feather name="check-circle" size={14} color={theme.good} />
+            <Text style={styles.okText}>Connected.</Text>
+          </View>
+        )}
         {connection === "failed" && (
           <Text style={styles.errorText}>
             Saved, but couldn't reach that address. Double check it's running and reachable.
@@ -80,7 +90,10 @@ export default function SettingsScreen() {
       </View>
 
       <View style={styles.panel}>
-        <Text style={styles.panelTitle}>Privacy</Text>
+        <View style={styles.panelTitleRow}>
+          <Feather name="shield" size={13} color={theme.accent} />
+          <Text style={styles.panelTitle}>Privacy</Text>
+        </View>
         <Text style={styles.helpText}>
           Your voice check-ins are sent to the server you configure above for
           transcription and analysis, and stored there — not on Anthropic's or any
@@ -92,8 +105,12 @@ export default function SettingsScreen() {
       <CrisisBanner />
 
       <View style={styles.panel}>
-        <Text style={styles.panelTitle}>Data</Text>
+        <View style={styles.panelTitleRow}>
+          <Feather name="database" size={13} color={theme.accent} />
+          <Text style={styles.panelTitle}>Data</Text>
+        </View>
         <Pressable style={styles.dangerButton} onPress={confirmDeleteAll}>
+          <Feather name="trash-2" size={16} color={theme.danger} />
           <Text style={styles.dangerButtonText}>Delete all my data</Text>
         </Pressable>
       </View>
@@ -112,6 +129,7 @@ const styles = StyleSheet.create({
     gap: 12,
     ...theme.card,
   },
+  panelTitleRow: { flexDirection: "row", alignItems: "center", gap: 6 },
   panelTitle: {
     color: theme.accent,
     fontSize: 12,
@@ -131,19 +149,26 @@ const styles = StyleSheet.create({
     fontSize: 14,
   },
   primaryButton: {
+    flexDirection: "row",
+    justifyContent: "center",
     backgroundColor: theme.accent,
     borderRadius: 999,
     paddingVertical: 14,
     alignItems: "center",
+    gap: 8,
   },
   primaryButtonText: { color: "#FFFFFF", fontWeight: "700", fontSize: 15 },
+  okRow: { flexDirection: "row", alignItems: "center", gap: 6 },
   okText: { color: theme.good, fontSize: 13, fontWeight: "700" },
   errorText: { color: theme.danger, fontSize: 13, lineHeight: 18 },
   dangerButton: {
+    flexDirection: "row",
+    justifyContent: "center",
     backgroundColor: theme.dangerSoft,
     borderRadius: 999,
     paddingVertical: 14,
     alignItems: "center",
+    gap: 8,
   },
   dangerButtonText: { color: theme.danger, fontWeight: "700", fontSize: 15 },
 });

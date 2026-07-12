@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { ActivityIndicator, ScrollView, StyleSheet, Text, View } from "react-native";
+import Feather from "@expo/vector-icons/Feather";
 import { useLocalSearchParams } from "expo-router";
 import { getEntry } from "../../lib/api";
 import { theme } from "../../lib/theme";
@@ -46,17 +47,26 @@ export default function EntryDetailScreen() {
       </Text>
 
       <View style={styles.panel}>
-        <Text style={styles.label}>What you said</Text>
+        <View style={styles.labelRow}>
+          <Feather name="message-circle" size={13} color={theme.textDim} />
+          <Text style={styles.label}>What you said</Text>
+        </View>
         <Text style={styles.transcript}>{entry.transcript}</Text>
       </View>
 
       <View style={styles.panel}>
-        <Text style={styles.label}>Reflection</Text>
+        <View style={styles.labelRow}>
+          <Feather name="heart" size={13} color={theme.textDim} />
+          <Text style={styles.label}>Reflection</Text>
+        </View>
         <Text style={styles.body}>{entry.supportiveNote}</Text>
       </View>
 
       <View style={styles.panel}>
-        <Text style={styles.label}>Something small to try</Text>
+        <View style={styles.labelRow}>
+          <Feather name="compass" size={13} color={theme.textDim} />
+          <Text style={styles.label}>Something small to try</Text>
+        </View>
         <Text style={styles.body}>{entry.suggestion}</Text>
       </View>
 
@@ -86,6 +96,7 @@ const styles = StyleSheet.create({
     gap: 8,
     ...theme.card,
   },
+  labelRow: { flexDirection: "row", alignItems: "center", gap: 6 },
   label: {
     color: theme.textDim,
     fontSize: 11,

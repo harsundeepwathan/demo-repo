@@ -1,5 +1,6 @@
 import { useCallback, useState } from "react";
 import { RefreshControl, ScrollView, StyleSheet, Text, View } from "react-native";
+import Feather from "@expo/vector-icons/Feather";
 import { useFocusEffect } from "expo-router";
 import { getInsights } from "../../lib/api";
 import { theme } from "../../lib/theme";
@@ -38,12 +39,18 @@ export default function PatternsScreen() {
       ) : (
         <>
           <View style={styles.panel}>
-            <Text style={styles.panelTitle}>Mood, last 14 days</Text>
+            <View style={styles.panelTitleRow}>
+              <Feather name="trending-up" size={13} color={theme.accent} />
+              <Text style={styles.panelTitle}>Mood, last 14 days</Text>
+            </View>
             <TrendChart points={insights?.moodTrend ?? []} />
           </View>
 
           <View style={styles.panel}>
-            <Text style={styles.panelTitle}>What keeps coming up</Text>
+            <View style={styles.panelTitleRow}>
+              <Feather name="hash" size={13} color={theme.accent} />
+              <Text style={styles.panelTitle}>What keeps coming up</Text>
+            </View>
             {insights && insights.topThemes.length > 0 ? (
               <View style={styles.themeList}>
                 {insights.topThemes.map((t) => (
@@ -74,7 +81,10 @@ export default function PatternsScreen() {
           </View>
 
           <View style={styles.panel}>
-            <Text style={styles.panelTitle}>Worth noticing</Text>
+            <View style={styles.panelTitleRow}>
+              <Feather name="eye" size={13} color={theme.accent} />
+              <Text style={styles.panelTitle}>Worth noticing</Text>
+            </View>
             {insights && insights.observations.length > 0 ? (
               insights.observations.map((o) => (
                 <Text key={o} style={styles.observation}>
@@ -105,6 +115,7 @@ const styles = StyleSheet.create({
     gap: 14,
     ...theme.card,
   },
+  panelTitleRow: { flexDirection: "row", alignItems: "center", gap: 6 },
   panelTitle: {
     color: theme.accent,
     fontSize: 12,

@@ -1,5 +1,6 @@
 import { useCallback, useState } from "react";
 import { FlatList, Pressable, RefreshControl, StyleSheet, Text, View } from "react-native";
+import Feather from "@expo/vector-icons/Feather";
 import { useFocusEffect, useRouter } from "expo-router";
 import { listEntries } from "../../lib/api";
 import { theme } from "../../lib/theme";
@@ -79,6 +80,7 @@ export default function HistoryScreen() {
               {item.transcript}
             </Text>
           </View>
+          <Feather name="chevron-right" size={18} color={theme.textFaint} />
         </Pressable>
       )}
     />
