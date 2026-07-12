@@ -102,9 +102,11 @@ export default function TalkScreen() {
       {phase === "idle" && (
         <View style={styles.panel}>
           <Text style={styles.prompt}>{prompt}</Text>
-          <Pressable style={styles.recordButton} onPress={startRecording}>
-            <Text style={styles.recordButtonText}>●</Text>
-          </Pressable>
+          <View style={styles.recordRing}>
+            <Pressable style={styles.recordButton} onPress={startRecording}>
+              <Text style={styles.recordButtonText}>●</Text>
+            </Pressable>
+          </View>
           <Text style={styles.hint}>Tap to start talking</Text>
         </View>
       )}
@@ -114,9 +116,11 @@ export default function TalkScreen() {
           <Text style={styles.timer}>
             {mm}:{ss}
           </Text>
-          <Pressable style={styles.stopButton} onPress={stopAndUpload}>
-            <Text style={styles.stopButtonText}>■</Text>
-          </Pressable>
+          <View style={styles.recordRing}>
+            <Pressable style={styles.stopButton} onPress={stopAndUpload}>
+              <Text style={styles.stopButtonText}>■</Text>
+            </Pressable>
+          </View>
           <Text style={styles.hint}>Tap to finish</Text>
         </View>
       )}
@@ -171,80 +175,96 @@ export default function TalkScreen() {
 
 const styles = StyleSheet.create({
   screen: { flex: 1, backgroundColor: theme.bg },
-  content: { padding: 20, gap: 16, paddingBottom: 40 },
-  heading: { fontSize: 28, fontWeight: "700", color: theme.text },
-  subheading: { fontSize: 14, color: theme.textDim, marginTop: -8 },
+  content: { padding: 20, gap: 18, paddingTop: 12, paddingBottom: 40 },
+  heading: { fontSize: 32, fontWeight: "800", color: theme.text, letterSpacing: -0.5 },
+  subheading: { fontSize: 15, color: theme.textDim, marginTop: -10 },
   panel: {
     backgroundColor: theme.panel,
-    borderColor: theme.panelBorder,
-    borderWidth: 1,
     borderRadius: theme.radius,
-    padding: 24,
+    padding: 28,
     alignItems: "center",
-    gap: 16,
-    minHeight: 220,
+    gap: 18,
+    minHeight: 240,
+    justifyContent: "center",
+    ...theme.card,
+  },
+  prompt: { color: theme.textDim, fontSize: 16, textAlign: "center", fontWeight: "500" },
+  recordRing: {
+    width: 108,
+    height: 108,
+    borderRadius: 54,
+    backgroundColor: theme.warmSoft,
+    alignItems: "center",
     justifyContent: "center",
   },
-  prompt: { color: theme.textDim, fontSize: 15, textAlign: "center" },
   recordButton: {
-    width: 84,
-    height: 84,
-    borderRadius: 42,
-    backgroundColor: theme.accent,
+    width: 80,
+    height: 80,
+    borderRadius: 40,
+    backgroundColor: theme.warm,
     alignItems: "center",
     justifyContent: "center",
+    shadowColor: theme.warmStrong,
+    shadowOffset: { width: 0, height: 8 },
+    shadowOpacity: 0.35,
+    shadowRadius: 16,
+    elevation: 6,
   },
-  recordButtonText: { color: "#0d0f18", fontSize: 30 },
+  recordButtonText: { color: "#FFFFFF", fontSize: 28 },
   stopButton: {
-    width: 84,
-    height: 84,
-    borderRadius: 42,
+    width: 80,
+    height: 80,
+    borderRadius: 26,
     backgroundColor: theme.danger,
     alignItems: "center",
     justifyContent: "center",
+    shadowColor: theme.danger,
+    shadowOffset: { width: 0, height: 8 },
+    shadowOpacity: 0.3,
+    shadowRadius: 16,
+    elevation: 6,
   },
-  stopButtonText: { color: "#2a0d0d", fontSize: 26 },
-  hint: { color: theme.textFaint, fontSize: 13 },
+  stopButtonText: { color: "#FFFFFF", fontSize: 24 },
+  hint: { color: theme.textFaint, fontSize: 13, fontWeight: "600" },
   timer: {
     color: theme.text,
-    fontSize: 36,
+    fontSize: 40,
     fontVariant: ["tabular-nums"],
-    fontWeight: "600",
+    fontWeight: "800",
   },
   resultLabel: {
-    color: theme.textDim,
+    color: theme.accent,
     fontSize: 12,
+    fontWeight: "800",
     textTransform: "uppercase",
-    letterSpacing: 0.6,
+    letterSpacing: 0.8,
     alignSelf: "flex-start",
   },
-  resultNote: { color: theme.text, fontSize: 16, lineHeight: 22, alignSelf: "flex-start" },
+  resultNote: { color: theme.text, fontSize: 17, lineHeight: 24, alignSelf: "flex-start" },
   resultSuggestion: {
     color: theme.text,
     fontSize: 15,
-    lineHeight: 21,
+    lineHeight: 22,
     alignSelf: "flex-start",
   },
   divider: { height: 1, backgroundColor: theme.panelBorder, width: "100%" },
-  themeRow: { flexDirection: "row", flexWrap: "wrap", gap: 6, alignSelf: "flex-start" },
+  themeRow: { flexDirection: "row", flexWrap: "wrap", gap: 8, alignSelf: "flex-start" },
   themeChip: {
-    backgroundColor: theme.tile,
+    backgroundColor: theme.accentSoft,
     borderRadius: 999,
-    paddingHorizontal: 10,
-    paddingVertical: 4,
+    paddingHorizontal: 12,
+    paddingVertical: 6,
   },
-  themeChipText: { color: theme.textDim, fontSize: 12 },
+  themeChipText: { color: theme.accentStrong, fontSize: 12, fontWeight: "700" },
   secondaryButton: {
     marginTop: 8,
-    backgroundColor: theme.tile,
-    borderColor: theme.panelBorder,
-    borderWidth: 1,
-    borderRadius: 12,
-    paddingHorizontal: 20,
-    paddingVertical: 10,
+    backgroundColor: theme.accent,
+    borderRadius: 999,
+    paddingHorizontal: 26,
+    paddingVertical: 13,
   },
-  secondaryButtonText: { color: theme.text, fontWeight: "600" },
-  errorText: { color: theme.danger, fontSize: 14, textAlign: "center" },
+  secondaryButtonText: { color: "#FFFFFF", fontWeight: "700", fontSize: 14 },
+  errorText: { color: theme.danger, fontSize: 14, textAlign: "center", fontWeight: "500" },
   disclaimer: {
     color: theme.textFaint,
     fontSize: 11,

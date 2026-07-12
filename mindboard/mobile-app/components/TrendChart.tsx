@@ -43,16 +43,19 @@ export function TrendChart({ points }: { points: MoodPoint[] }) {
           x2={CHART_WIDTH - PADDING}
           y2={zeroY}
           stroke={theme.panelBorder}
-          strokeWidth={1}
+          strokeWidth={1.5}
+          strokeDasharray="4,4"
         />
-        <Polyline points={linePoints} fill="none" stroke={theme.accent} strokeWidth={2.5} />
+        <Polyline points={linePoints} fill="none" stroke={theme.accent} strokeWidth={3.5} />
         {usable.map((p, i) => (
           <Circle
             key={p.date}
             cx={toX(i)}
             cy={toY(p.averageMood)}
-            r={i === usable.length - 1 ? 4.5 : 3}
-            fill={theme.accent}
+            r={i === usable.length - 1 ? 6 : 3.5}
+            fill={i === usable.length - 1 ? theme.warm : theme.accent}
+            stroke={theme.panel}
+            strokeWidth={i === usable.length - 1 ? 2.5 : 0}
           />
         ))}
       </Svg>

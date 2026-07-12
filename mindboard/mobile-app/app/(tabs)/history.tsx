@@ -13,6 +13,12 @@ function moodEmoji(score: number): string {
   return "😞";
 }
 
+function moodBadgeColor(score: number): string {
+  if (score >= 1) return theme.goodSoft;
+  if (score > -1) return theme.tile;
+  return theme.dangerSoft;
+}
+
 export default function HistoryScreen() {
   const router = useRouter();
   const [entries, setEntries] = useState<Entry[]>([]);
@@ -58,7 +64,9 @@ export default function HistoryScreen() {
       refreshControl={<RefreshControl refreshing={loading} onRefresh={load} tintColor={theme.accent} />}
       renderItem={({ item }) => (
         <Pressable style={styles.row} onPress={() => router.push(`/entry/${item.id}`)}>
-          <Text style={styles.emoji}>{moodEmoji(item.moodScore)}</Text>
+          <View style={[styles.emojiBadge, { backgroundColor: moodBadgeColor(item.moodScore) }]}>
+            <Text style={styles.emoji}>{moodEmoji(item.moodScore)}</Text>
+          </View>
           <View style={styles.rowBody}>
             <Text style={styles.rowDate}>
               {new Date(item.createdAt).toLocaleDateString(undefined, {
@@ -79,22 +87,28 @@ export default function HistoryScreen() {
 
 const styles = StyleSheet.create({
   screen: { flex: 1, backgroundColor: theme.bg },
-  content: { padding: 16, gap: 10 },
+  content: { padding: 16, paddingTop: 20, gap: 12 },
   center: { flex: 1, backgroundColor: theme.bg, alignItems: "center", justifyContent: "center", padding: 24 },
   emptyText: { color: theme.textFaint, textAlign: "center" },
   errorText: { color: theme.danger, textAlign: "center" },
   row: {
     flexDirection: "row",
-    gap: 12,
+    gap: 14,
     backgroundColor: theme.panel,
-    borderColor: theme.panelBorder,
-    borderWidth: 1,
-    borderRadius: 14,
-    padding: 14,
+    borderRadius: theme.radiusSm,
+    padding: 16,
     alignItems: "center",
+    ...theme.card,
   },
-  emoji: { fontSize: 24 },
+  emojiBadge: {
+    width: 46,
+    height: 46,
+    borderRadius: 23,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  emoji: { fontSize: 22 },
   rowBody: { flex: 1, gap: 4 },
-  rowDate: { color: theme.textDim, fontSize: 12, fontWeight: "600" },
+  rowDate: { color: theme.accent, fontSize: 12, fontWeight: "800", textTransform: "uppercase", letterSpacing: 0.4 },
   rowSnippet: { color: theme.text, fontSize: 14, lineHeight: 19 },
 });
